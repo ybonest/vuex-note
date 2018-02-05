@@ -1,0 +1,27 @@
+{
+  "name": "nodejs-tutorial",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.html",
+  "directories": {
+    "doc": "docs"
+  },
+  "dependencies": {
+    "docsify-cli": "^4.2.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ybonest/css-note.git"
+  },
+  "keywords": [
+    "node",
+    "nodejs",
+    "tutorial",
+    "nodejs tutorial",
+    "node tutoria"
+  ],
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://github.com/ybonest/css-note.git#readme"
+}

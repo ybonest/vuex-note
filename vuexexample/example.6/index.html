@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../js/vue-2.5.13.js"></script>
+  <script src="../js/vuex.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <component-one></component-one>
+  </div>
+  <script>
+    const store = new Vuex.Store({
+      state: {  //数据池
+        count: 0,
+        carts: [
+          { id: 1, count: 1 },
+          { id: 2, count: 2 },
+          { id: 3, count: 3 },
+          { id: 4, count: 4 },
+          { id: 5, count: 5 },
+        ]
+      },
+      mutations: {
+        increme(state) {
+          state.count++;
+        },
+        incremeArg(state,step){
+          state.count += step;
+        }
+      }
+    })
+    //定义组件
+    Vue.component('component-one', {
+      template: `<div>
+            <p>{{dataOne}}</p>
+            <button @click="increme">+1</button>
+            <p>{{count}}</p>
+            <hr>
+            <input type="text" v-model="step">
+            <button @click="incremeArg(step)">+{{step}}</button>
+            <p>{{count}}</p>
+            <button @click="add">+1</button>
+            <p>{{count}}</p>
+            <hr>
+          </div>`,
+      data() {
+        return {
+          dataOne: 'component-one组件',
+          step:1
+        }
+      },
+      methods: {
+        // add(){
+        //   this.$store.commit('increme');
+        // },
+        // addStep(){
+        //   this.$store.commit('incremeArg',parseInt(this.step));
+        // }
+        ...Vuex.mapMutations([  //映射mutations,参数数组，对应store中的mutations
+          'increme',
+          'incremeArg'
+        ]),
+        ...Vuex.mapMutations({ //映射mutations,参数对象，对应store中的mutations
+          add:'increme'
+        })
+      },
+      computed:{
+        ...Vuex.mapState(['count'])
+      }
+    })
+    const vm = new Vue({
+      el: "#app",
+      data: {
+        dataApp: '来自App的数据'
+      },
+      store  //将vuex实例挂载到组件上
+    })
+  </script>
+</body>
+
+</html>

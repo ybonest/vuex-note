@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../js/vue-2.5.13.js"></script>
+  <script src="../js/vuex.js"></script>
+</head>
+<body>
+  <div id="app">
+    <component-one></component-one>
+  </div>
+  <script>
+    const store = new Vuex.Store({
+      state:{  //数据池
+        count:0,
+        cart:[
+          {id:1,count:1},
+        ]
+      },
+      mutations:{
+        increme(state){
+          state.count++;
+        }
+      }
+    })
+    //定义组件
+    Vue.component('component-one',{
+      template:`<div>
+          <p>{{dataOne}}</p>
+          <button @click="add">+1</button>
+          <p>{{count}}</p>
+          <p>{{countAlias}}</p>
+          <p>{{countPlusLocalState}}</p>
+        </div>`,
+      data(){
+        return {
+          dataOne:'component-one组件',
+          localCount:2
+        }
+      },
+      methods:{
+        add(){
+          this.$store.commit('increme') //commit参数对应所要调用的mutations中的属性方法
+        }
+      },
+      computed:Vuex.mapState({  //使用mapState生成计算属性
+        count:state => state.count, //使用箭头函数
+        countAlias:'count', //传入的字符串等同于箭头函数state => state.count
+        countPlusLocalState(state){
+          return state.count + this.localCount
+        }
+      })
+    })
+    const vm = new Vue({
+      el:"#app",
+      data:{
+        dataApp:'来自App的数据'
+      },
+      store  //将vuex实例挂载到组件上
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../js/vue-2.5.13.js"></script>
+  <script src="../js/vuex.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <component-one></component-one>
+  </div>
+  <script>
+    const store = new Vuex.Store({
+      state: {  //数据池
+        count: 0,
+        carts: [
+          { id: 1, count: 1 },
+          { id: 2, count: 2 },
+          { id: 3, count: 3 },
+          { id: 4, count: 4 },
+          { id: 5, count: 5 },
+        ]
+      },
+      mutations: {
+        increme(state) {
+          state.count++;
+        }
+      },
+      getters: {
+        filtersCart(state) {  //使用普通函数
+          return state.carts;
+        },
+        filterCart: state => { //使用箭头函数
+          return state.carts.filter(cart => cart.id % 2 === 0)
+        },
+        getId5: (state) => (id) => {  //返回一个函数来传入参数
+          console.log(id);
+          console.log(state.carts.find(cart => cart.id === id))
+          return state.carts.find(cart => cart.id === id)
+        }
+      }
+    })
+    //定义组件
+    Vue.component('component-one', {
+      template: `<div>
+            <p>{{dataOne}}</p>
+            <p v-for="item in getCart" :key="item.id">{{item.count}}</p>
+            <hr>
+            <div>
+              <p v-for="item in getFiltersCart" :key="item.id">{{item.count}}</p>
+            </div>
+            <hr>
+            <div>
+              <p>{{getId5Arg.count}}</p>
+            </div>
+          </div>`,
+      data() {
+        return {
+          dataOne: 'component-one组件'
+        }
+      },
+      created() {
+        this.test();
+      },
+      methods: {
+        test() {
+          console.log(this);
+          console.log(this.getFiltersCart)
+        }
+      },
+      computed: {
+        getCart() { //引入store中的getters
+          return this.$store.getters.filtersCart;
+        },
+        getFiltersCart() {
+          return this.$store.getters.filterCart;
+        },
+        getId5Arg() {
+          return this.$store.getters.getId5(5);  //调用getters传入参数
+        }
+      }
+    })
+    const vm = new Vue({
+      el: "#app",
+      data: {
+        dataApp: '来自App的数据'
+      },
+      store  //将vuex实例挂载到组件上
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../js/vue-2.5.13.js"></script>
+  <script src="../js/vuex.js"></script>
+</head>
+<body>
+  <div id="app">
+    <component-one></component-one>
+    <hr>
+    <component-two></component-two>
+  </div>
+  <script>
+    const store = new Vuex.Store({
+      state:{  //数据池
+        count:0,
+        cart:[
+          {id:1,count:1},
+        ]
+      },
+      mutations:{
+        increme(state){
+          state.count++;
+        }
+      },
+      getters:{
+        
+      }
+    })
+    //定义组件
+    Vue.component('component-one',{
+      template:`<div>
+          <p>{{dataOne}}</p>
+          <input type="button" value="增加数据1" @click="increment">
+          <input type="button" value="增加数据2" @click="increment2">
+          <p>count:{{$store.state.count}}</p>
+        </div>`,
+      data(){
+        return {
+          dataOne:'component-one组件'
+        }
+      },
+      methods:{
+        increment(){
+          console.log(this);  //当在Vue实例中挂载Vuex的实例store后，可以看到，组件中多了一个$store对象，该对象存放了共享数据
+          console.log(this.$store.state.count)
+          this.$store.state.count++;  //虽然可以这样操作共享数据，但是一般情况下这中操作数据的方式是被禁止的，vuex中修改gongxiang数据需要借用mutations
+        },
+        increment2(){
+          this.$store.commit('increme');
+        }
+      }
+    })
+    Vue.component('component-two',{
+      template:`<div>
+          <p>{{dataTwo}}</p>
+          <p>{{count}}</p>
+        </div>`,
+      data(){
+        return {
+          dataTwo:'component-two组件'
+        }
+      },
+      computed:{
+        ...Vuex.mapState(["count"])  //使用展开运算符以及mapState把数据映射state数据映射到组件的计算属性中
+      }
+    })
+    const vm = new Vue({
+      el:"#app",
+      data:{
+        dataApp:'来自App的数据'
+      },
+      store  //将vuex实例挂载到组件上
+    })
+  </script>
+</body>
+</html>
