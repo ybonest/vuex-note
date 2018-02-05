@@ -1,3 +1,4 @@
 - [Vuex是什么](/md/whateVuex.md)
 - [State数据共享池](/md/state.md)
 - [Getter](/md/Getter.md)
+- [Mutation](/md/Mutation.md)
