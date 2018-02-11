@@ -18,7 +18,7 @@ computed:{
   3. **Getter也可以接受其他getter作为第二个参数**
   4. **可以通过让getter返回一个函数，来实现给getter传参**
 
-实例展示以及[(链接)](https://ybonest.github.io/vue-note/vuexexample/example.3/index.html)
+实例展示以及[(链接)](https://ybonest.github.io/vuex-note/vuexexample/example.3/index.html)
 <iframe style="overflow:hidden;height:180px;width:100%" class="yboflag" src="vuexexample/example.3/index.html"></iframe>
 ```
 <div id="app">

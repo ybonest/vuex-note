@@ -5,7 +5,7 @@
 2. 实例化一个Vuex.Store对象，并挂载到Vue中
 3. 在vuex中的state数据池中定义共享数据
 
-实例展示以及[(链接)](https://ybonest.github.io/vue-note/vuexexample/example/index.html)
+实例展示以及[(链接)](https://ybonest.github.io/vuex-note/vuexexample/example/index.html)
 <iframe style="overflow:hidden;height:180px;width:100%" class="yboflag" src="vuexexample/example/index.html"></iframe>
 
 ```
@@ -80,7 +80,7 @@
 #### mapState辅助函数
 mapState函数可以快捷方便的辅助我们生成计算属性，实时更新共享数据的变化
 
-实例展示以及[(链接)](https://ybonest.github.io/vue-note/vuexexample/example.1/index.html)
+实例展示以及[(链接)](https://ybonest.github.io/vuex-note/vuexexample/example.1/index.html)
 <iframe style="overflow:hidden;height:180px;width:100%" class="yboflag" src="vuexexample/example.1/index.html"></iframe>
 
 ```
